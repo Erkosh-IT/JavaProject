@@ -2,27 +2,24 @@ package HOSPITAL;
 
 public class Appointment {
 
-    private int appointmentId;
+    private int id;
     private String date;
     private String time;
     private String status;
 
-    public Appointment(int appointmentId, String date, String time, String status) {
-        this.appointmentId = appointmentId;
-        this.date = date;
-        this.time = time;
-        this.status = status;
+    public Appointment(int id, String date, String time, String status) {
+        setId(id);
+        setDate(date);
+        setTime(time);
+        setStatus(status);
     }
 
     public Appointment() {
-        this.appointmentId = 0;
-        this.date = "Unknown";
-        this.time = "Unknown";
-        this.status = "Scheduled";
+        this(1, "Unknown", "Unknown", "Scheduled");
     }
 
     public int getAppointmentId() {
-        return appointmentId;
+        return id;
     }
 
     public String getDate() {
@@ -37,20 +34,40 @@ public class Appointment {
         return status;
     }
 
-    public void setAppointmentId(int appointmentId) {
-        this.appointmentId = appointmentId;
+    public void setId(int id) {
+        if (id > 0) {
+            this.id = id;
+        } else {
+            System.out.println("Invalid ID. Set to 1.");
+            this.id = 1;
+        }
     }
 
     public void setDate(String date) {
-        this.date = date;
+        if (date != null && !date.trim().isEmpty()) {
+            this.date = date;
+        } else {
+            System.out.println("Date cannot be empty.");
+            this.date = "Unknown";
+        }
     }
 
     public void setTime(String time) {
-        this.time = time;
+        if (time != null && !time.trim().isEmpty()) {
+            this.time = time;
+        } else {
+            System.out.println("Time cannot be empty.");
+            this.time = "Unknown";
+        }
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        if (status != null && !status.trim().isEmpty()) {
+            this.status = status;
+        } else {
+            System.out.println("Status cannot be empty. Set to Scheduled.");
+            this.status = "Scheduled";
+        }
     }
 
     public void cancelAppointment() {
@@ -63,7 +80,7 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return "Appointment{id=" + appointmentId + ", date='" + date +
+        return "Appointment{id=" + id + ", date='" + date +
                 "', time='" + time + "', status='" + status + "'}";
     }
 }

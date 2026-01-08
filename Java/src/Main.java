@@ -8,7 +8,6 @@ import java.util.Scanner;
  // менюшка
 public class Main {
 
-
     static ArrayList<Patient> patients = new ArrayList<>();
     static ArrayList<Doctor> doctors = new ArrayList<>();
     static ArrayList<Appointment> appointments = new ArrayList<>();

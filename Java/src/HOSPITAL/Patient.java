@@ -39,7 +39,6 @@ public class Patient extends Person {
         }
     }
 
-
     public boolean isAdult() {
         return age >= 18;
     }

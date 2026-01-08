@@ -5,6 +5,7 @@ public class Doctor extends Person {
     private String specialization;
     private int experienceYears;
 
+
     public Doctor(int id, String name, String specialization, int experienceYears) {
         super(id, name);
         setSpecialization(specialization);

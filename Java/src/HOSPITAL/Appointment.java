@@ -7,6 +7,7 @@ public class Appointment {
     private String time;
     private String status;
 
+
     public Appointment(int id, String date, String time, String status) {
         setId(id);
         setDate(date);

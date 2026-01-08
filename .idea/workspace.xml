@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="068b031c-b59f-4b56-b8cf-d0cd66589064" name="Changes" comment="123">
+      <change afterPath="$PROJECT_DIR$/Java/src/HOSPITAL/Person.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/src/HOSPITAL/Doctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/src/HOSPITAL/Doctor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Java/src/HOSPITAL/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/src/HOSPITAL/Patient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Java/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,6 +82,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -89,7 +93,6 @@
     <attachedChunks>
       <set>
         <option value="bundled-jdk-30f59d01ecdd-cffe25b9f5b3-intellij.indexing.shared.core-IU-253.28294.334" />
-        <option value="bundled-js-predefined-d6986cc7102b-c7e53b3be11b-JavaScript-IU-253.28294.334" />
       </set>
     </attachedChunks>
   </component>
@@ -105,7 +108,8 @@
       <workItem from="1766591195138" duration="4972000" />
       <workItem from="1766630557435" duration="716000" />
       <workItem from="1766645558309" duration="2495000" />
-      <workItem from="1767805474735" duration="3150000" />
+      <workItem from="1767805474735" duration="3433000" />
+      <workItem from="1767852428745" duration="10000" />
     </task>
     <task id="LOCAL-00001" summary="TEST">
       <option name="closed" value="true" />
@@ -147,7 +151,23 @@
       <option name="project" value="LOCAL" />
       <updated>1767808632027</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="123">
+      <option name="closed" value="true" />
+      <created>1767809217779</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1767809217779</updated>
+    </task>
+    <task id="LOCAL-00007" summary="123">
+      <option name="closed" value="true" />
+      <created>1767809319251</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1767809319251</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

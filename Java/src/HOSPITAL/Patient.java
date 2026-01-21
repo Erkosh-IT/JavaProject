@@ -1,7 +1,6 @@
 package HOSPITAL;
 
 public class Patient extends Person {
-
     private int age;
     private String diagnosis;
 
@@ -15,44 +14,31 @@ public class Patient extends Person {
         this(1, "Unknown", 0, "Not diagnosed");
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public String getDiagnosis() {
-        return diagnosis;
-    }
+    public int getAge() { return age; }
+    public String getDiagnosis() { return diagnosis; }
 
     public void setAge(int age) {
-        if (age >= 0) {
-            this.age = age;
-        } else {
-            this.age = 0;
-        }
+        if (age < 0) throw new IllegalArgumentException("Age cannot be negative");
+        this.age = age;
     }
 
     public void setDiagnosis(String diagnosis) {
-        if (diagnosis != null && !diagnosis.trim().isEmpty()) {
-            this.diagnosis = diagnosis;
-        } else {
-            this.diagnosis = "Not diagnosed";
-        }
+        if (diagnosis == null || diagnosis.trim().isEmpty()) throw new IllegalArgumentException("Diagnosis cannot be empty");
+        this.diagnosis = diagnosis;
     }
 
-    public boolean isAdult() {
-        return age >= 18;
-    }
+    public boolean isAdult() { return age >= 18; }
 
     @Override
-    public String getRole() {
-        return "Patient";
+    public String getRole() { return "Patient"; }
+
+    @Override
+    public void performDuty() {
+        System.out.println("Patient " + getName() + " is waiting for appointment");
     }
 
     @Override
     public String toString() {
-        return getRole() + " {" +
-                super.toString() +
-                ", age=" + age +
-                ", diagnosis='" + diagnosis + "'}";
+        return getRole() + " {" + super.toString() + ", age=" + age + ", diagnosis='" + diagnosis + "'}";
     }
 }

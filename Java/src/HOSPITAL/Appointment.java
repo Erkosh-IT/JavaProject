@@ -1,7 +1,6 @@
 package HOSPITAL;
 
 public class Appointment {
-
     private int id;
     private String date;
     private String time;
@@ -18,70 +17,37 @@ public class Appointment {
         this(1, "Unknown", "Unknown", "Scheduled");
     }
 
-    public int getAppointmentId() {
-        return id;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public String getStatus() {
-        return status;
-    }
+    public int getAppointmentId() { return id; }
+    public String getDate() { return date; }
+    public String getTime() { return time; }
+    public String getStatus() { return status; }
 
     public void setId(int id) {
-        if (id > 0) {
-            this.id = id;
-        } else {
-            System.out.println("Invalid ID. Set to 1.");
-            this.id = 1;
-        }
+        if (id <= 0) throw new IllegalArgumentException("ID must be > 0");
+        this.id = id;
     }
 
     public void setDate(String date) {
-        if (date != null && !date.trim().isEmpty()) {
-            this.date = date;
-        } else {
-            System.out.println("Date cannot be empty.");
-            this.date = "Unknown";
-        }
+        if (date == null || date.trim().isEmpty()) throw new IllegalArgumentException("Date cannot be empty");
+        this.date = date;
     }
 
     public void setTime(String time) {
-        if (time != null && !time.trim().isEmpty()) {
-            this.time = time;
-        } else {
-            System.out.println("Time cannot be empty.");
-            this.time = "Unknown";
-        }
+        if (time == null || time.trim().isEmpty()) throw new IllegalArgumentException("Time cannot be empty");
+        this.time = time;
     }
 
     public void setStatus(String status) {
-        if (status != null && !status.trim().isEmpty()) {
-            this.status = status;
-        } else {
-            System.out.println("Status cannot be empty. Set to Scheduled.");
-            this.status = "Scheduled";
-        }
+        if (status == null || status.trim().isEmpty()) throw new IllegalArgumentException("Status cannot be empty");
+        this.status = status;
     }
 
-    public void cancelAppointment() {
-        this.status = "Cancelled";
-    }
+    public void cancelAppointment() { this.status = "Cancelled"; }
 
-    public boolean isActive() {
-        return status.equalsIgnoreCase("Scheduled");
-    }
+    public boolean isActive() { return status.equalsIgnoreCase("Scheduled"); }
 
     @Override
     public String toString() {
-        return "Appointment{id=" + id + ", date='" + date +
-                "', time='" + time + "', status='" + status + "'}";
+        return "Appointment{id=" + id + ", date='" + date + "', time='" + time + "', status='" + status + "'}";
     }
 }
-

@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="068b031c-b59f-4b56-b8cf-d0cd66589064" name="Changes" comment="2312">
-      <change afterPath="$PROJECT_DIR$/Java/src/HOSPITAL/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Java/src/HOSPITAL/Treatable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Java/src/exception/InvalidInputException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Java/src/menu/HospitalMenu.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Java/src/menu/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/src/HOSPITAL/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/src/HOSPITAL/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/src/HOSPITAL/Doctor.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/src/HOSPITAL/Doctor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/src/HOSPITAL/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/src/HOSPITAL/Patient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/src/HOSPITAL/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/src/HOSPITAL/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/src/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java/HOSPITAL/Appointment.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java/HOSPITAL/Appointment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java/HOSPITAL/Doctor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java/HOSPITAL/Doctor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java/HOSPITAL/Patient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Java/HOSPITAL/Patient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Java/Main.class" beforeDir="false" />
-    </list>
+    <list default="true" id="068b031c-b59f-4b56-b8cf-d0cd66589064" name="Changes" comment="1212312" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -213,7 +197,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767853789230</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="1212312">
+      <option name="closed" value="true" />
+      <created>1768982452589</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1768982452589</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -224,6 +216,7 @@
     <MESSAGE value="ллл" />
     <MESSAGE value="123" />
     <MESSAGE value="2312" />
-    <option name="LAST_COMMIT_MESSAGE" value="2312" />
+    <MESSAGE value="1212312" />
+    <option name="LAST_COMMIT_MESSAGE" value="1212312" />
   </component>
 </project>

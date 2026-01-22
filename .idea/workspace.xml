@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="068b031c-b59f-4b56-b8cf-d0cd66589064" name="Changes" comment="1212312">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/src/HOSPITAL/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/src/HOSPITAL/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/src/HOSPITAL/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/src/HOSPITAL/Patient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Java/src/HOSPITAL/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/src/HOSPITAL/Person.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Java/src/menu/HospitalMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/Java/src/menu/HospitalMenu.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -219,7 +216,15 @@
       <option name="project" value="LOCAL" />
       <updated>1768982580927</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="1212312">
+      <option name="closed" value="true" />
+      <created>1769052052205</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1769052052207</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

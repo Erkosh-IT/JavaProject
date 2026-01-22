@@ -13,94 +13,133 @@ public class HospitalMenu implements Menu {
     @Override
     public void displayMenu() {
         System.out.println("\n=== HOSPITAL MENU ===");
-        System.out.println("1-Add patient  2-View patients");
-        System.out.println("3-Add doctor   4-View doctors");
-        System.out.println("5-Add appointment     6-View appointments");
-        System.out.println("7-Polymorphism 0-Exit");
+        System.out.println("1 - Add patient");
+        System.out.println("2 - View patients");
+        System.out.println("3 - Add doctor");
+        System.out.println("4 - View doctors");
+        System.out.println("5 - Add appointment");
+        System.out.println("6 - View appointments");
+        System.out.println("7 - Polymorphism demo");
+        System.out.println("0 - Exit");
     }
 
     @Override
     public void run() {
         while (true) {
             displayMenu();
+            System.out.print("Your choice: ");
             try {
                 int choice = Integer.parseInt(scanner.nextLine().trim());
-                if (choice == 0) break;
-                executeChoice(choice);
+                if (choice == 0) {
+                    System.out.println("Program finished.");
+                    break;
+                }
+                if (choice == 1) addPatient();
+                else if (choice == 2) viewPatients();
+                else if (choice == 3) addDoctor();
+                else if (choice == 4) viewDoctors();
+                else if (choice == 5) addAppointment();
+                else if (choice == 6) viewAppointments();
+                else if (choice == 7) demonstratePolymorphism();
+                else System.out.println("Invalid choice! Enter 0-7.");
             } catch (NumberFormatException e) {
-                System.out.println("Enter number 0-7!");
+                System.out.println("Error! Enter NUMBER (0-7)");
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
             }
         }
-        System.out.println("Program finished.");
         scanner.close();
     }
 
-    private void executeChoice(int choice) {
-        switch (choice) {
-            case 1 -> addPatient();
-            case 2 -> viewPatients();
-            case 3 -> addDoctor();
-            case 4 -> viewDoctors();
-            case 5 -> addAppointment();
-            case 6 -> viewAppointments();
-            case 7 -> demonstratePolymorphism();
-            default -> System.out.println("Invalid: 0-7");
-        }
-    }
-
-    private <T extends Person> void addPerson(String type, String[] prompts, PersonCreator<T> creator) {
+    private void addPatient() {
         try {
-            String[] inputs = new String[prompts.length];
-            for (int i = 0; i < prompts.length; i++) {
-                System.out.print(prompts[i] + ": ");
-                inputs[i] = scanner.nextLine().trim();
-            }
-            T person = creator.create(inputs);
-            people.add(person);
-            System.out.println(type + " added: " + person.getName());
-        } catch (Exception e) {
+            System.out.print("Patient ID: ");
+            int id = Integer.parseInt(scanner.nextLine().trim());
+            System.out.print("Name: ");
+            String name = scanner.nextLine().trim();
+            System.out.print("Age: ");
+            int age = Integer.parseInt(scanner.nextLine().trim());
+            System.out.print("Diagnosis: ");
+            String diagnosis = scanner.nextLine().trim();
+
+            Patient patient = new Patient(id, name, age, diagnosis);
+            people.add(patient);
+            System.out.println("Patient added: " + name);
+        } catch (NumberFormatException e) {
+            System.out.println("ID/Age must be numbers!");
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    @FunctionalInterface
-    interface PersonCreator<T> {
-        T create(String[] inputs);
-    }
-
-    private void addPatient() {
-        addPerson("Patient", new String[]{"ID", "Name", "Age", "Diagnosis"},
-                inputs -> new Patient(
-                        Integer.parseInt(inputs[0]), inputs[1],
-                        Integer.parseInt(inputs[2]), inputs[3]));
-    }
-
     private void addDoctor() {
-        addPerson("Doctor", new String[]{"ID", "Name", "Specialization", "Experience"},
-                inputs -> new Doctor(
-                        Integer.parseInt(inputs[0]), inputs[1], inputs[2],
-                        Integer.parseInt(inputs[3])));
+        try {
+            System.out.print("Doctor ID: ");
+            int id = Integer.parseInt(scanner.nextLine().trim());
+            System.out.print("Name: ");
+            String name = scanner.nextLine().trim();
+            System.out.print("Specialization: ");
+            String specialization = scanner.nextLine().trim();
+            System.out.print("Experience years: ");
+            int experience = Integer.parseInt(scanner.nextLine().trim());
+
+            Doctor doctor = new Doctor(id, name, specialization, experience);
+            people.add(doctor);
+            System.out.println("Doctor added: " + name);
+        } catch (NumberFormatException e) {
+            System.out.println("ID/Experience must be numbers!");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void addAppointment() {
         try {
-            System.out.print("ID: "); int id = Integer.parseInt(scanner.nextLine().trim());
-            System.out.print("Date: "); String date = scanner.nextLine().trim();
-            System.out.print("Time: "); String time = scanner.nextLine().trim();
-            System.out.print("Status: "); String status = scanner.nextLine().trim();
-            appointments.add(new Appointment(id, date, time, status));
+            System.out.print("Appointment ID: ");
+            int id = Integer.parseInt(scanner.nextLine().trim());
+            System.out.print("Date: ");
+            String date = scanner.nextLine().trim();
+            System.out.print("Time: ");
+            String time = scanner.nextLine().trim();
+            System.out.print("Status: ");
+            String status = scanner.nextLine().trim();
+
+            Appointment appointment = new Appointment(id, date, time, status);
+            appointments.add(appointment);
             System.out.println("Appointment added.");
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
+            System.out.println("ID must be number!");
+        } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
     }
 
     private void viewPatients() {
-        printList("Patients", p -> p instanceof Patient);
+        boolean hasPatients = false;
+        System.out.println("\n--- PATIENTS ---");
+        for (int i = 0; i < people.size(); i++) {
+            if (people.get(i) instanceof Patient) {
+                System.out.println((i + 1) + ". " + people.get(i));
+                hasPatients = true;
+            }
+        }
+        if (!hasPatients) {
+            System.out.println("No patients.");
+        }
     }
 
     private void viewDoctors() {
-        printList("Doctors", p -> p instanceof Doctor);
+        boolean hasDoctors = false;
+        System.out.println("\n--- DOCTORS ---");
+        for (int i = 0; i < people.size(); i++) {
+            if (people.get(i) instanceof Doctor) {
+                System.out.println((i + 1) + ". " + people.get(i));
+                hasDoctors = true;
+            }
+        }
+        if (!hasDoctors) {
+            System.out.println("No doctors.");
+        }
     }
 
     private void viewAppointments() {
@@ -108,21 +147,9 @@ public class HospitalMenu implements Menu {
             System.out.println("No appointments.");
             return;
         }
-        System.out.println("--- Appointments ---");
+        System.out.println("\n--- APPOINTMENTS ---");
         for (int i = 0; i < appointments.size(); i++) {
             System.out.println((i + 1) + ". " + appointments.get(i));
-        }
-    }
-
-    private void printList(String title, java.util.function.Predicate<Person> filter) {
-        var filtered = people.stream().filter(filter).toList();
-        if (filtered.isEmpty()) {
-            System.out.println("No " + title.toLowerCase() + ".");
-            return;
-        }
-        System.out.println("--- " + title + " ---");
-        for (int i = 0; i < filtered.size(); i++) {
-            System.out.println((i + 1) + ". " + filtered.get(i));
         }
     }
 
@@ -132,20 +159,10 @@ public class HospitalMenu implements Menu {
             System.out.println("Add people first!");
             return;
         }
-        for (Person p : people) {
+        for (int i = 0; i < people.size(); i++) {
+            Person p = people.get(i);
             System.out.print(p.getRole() + " (" + p.getName() + "): ");
             p.performDuty();
-        }
-        if (!people.isEmpty()) {
-            var doctor = people.stream()
-                    .filter(p -> p instanceof Doctor)
-                    .map(p -> (Doctor) p)
-                    .findFirst();
-            doctor.ifPresent(d -> {
-                System.out.print("Treatable: ");
-                d.treatPatient();
-                System.out.println(d.getTreatmentInfo());
-            });
         }
     }
 }

@@ -1,168 +1,114 @@
 package menu;
-
-import HOSPITAL.*;
-import java.util.ArrayList;
+import HOSPITAL.Doctor;
+import HOSPITAL.DoctorDAO;
 import java.util.List;
 import java.util.Scanner;
 
 public class HospitalMenu implements Menu {
-    private List<Person> people = new ArrayList<>();
-    private List<Appointment> appointments = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
+    private DoctorDAO doctorDAO = new DoctorDAO();
 
     @Override
     public void displayMenu() {
-        System.out.println("\n=== HOSPITAL MENU ===");
-        System.out.println("1 - Add patient");
-        System.out.println("2 - View patients");
-        System.out.println("3 - Add doctor");
-        System.out.println("4 - View doctors");
-        System.out.println("5 - Add appointment");
-        System.out.println("6 - View appointments");
-        System.out.println("7 - Polymorphism demo");
-        System.out.println("0 - Exit");
+        System.out.println("\n--- DATABASE MENU ---");
+        System.out.println("1. Add Doctor");
+        System.out.println("2. View All Doctors");
+        System.out.println("3. Update Specialization");
+        System.out.println("4. Delete Doctor");
+        System.out.println("5. Search by Name");
+        System.out.println("6. Search by Experience (Numeric Search)");
+        System.out.println("0. Exit");
     }
 
     @Override
     public void run() {
         while (true) {
             displayMenu();
-            System.out.print("Your choice: ");
-            try {
-                int choice = Integer.parseInt(scanner.nextLine().trim());
-                if (choice == 0) {
-                    System.out.println("Program finished.");
-                    break;
-                }
-                if (choice == 1) addPatient();
-                else if (choice == 2) viewPatients();
-                else if (choice == 3) addDoctor();
-                else if (choice == 4) viewDoctors();
-                else if (choice == 5) addAppointment();
-                else if (choice == 6) viewAppointments();
-                else if (choice == 7) demonstratePolymorphism();
-                else System.out.println("Invalid choice! Enter 0-7.");
-            } catch (NumberFormatException e) {
-                System.out.println("Error! Enter NUMBER (0-7)");
-            } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
+            System.out.print("Select: ");
+            String input = scanner.nextLine();
+
+            if (input.equals("0")) break;
+
+            if (input.equals("1")) {
+                addDoctor();
+            } else if (input.equals("2")) {
+                viewDoctors();
+            } else if (input.equals("3")) {
+                updateDoctor();
+            } else if (input.equals("4")) {
+                deleteDoctor();
+            } else if (input.equals("5")) {
+                searchDoctor();
+            } else if (input.equals("6")) {
+                searchByExperience();
+            } else {
+                System.out.println("Wrong command.");
             }
         }
-        scanner.close();
     }
 
-    private void addPatient() {
-        try {
-            System.out.print("Patient ID: ");
-            int id = Integer.parseInt(scanner.nextLine().trim());
-            System.out.print("Name: ");
-            String name = scanner.nextLine().trim();
-            System.out.print("Age: ");
-            int age = Integer.parseInt(scanner.nextLine().trim());
-            System.out.print("Diagnosis: ");
-            String diagnosis = scanner.nextLine().trim();
-
-            Patient patient = new Patient(id, name, age, diagnosis);
-            people.add(patient);
-            System.out.println("Patient added: " + name);
-        } catch (NumberFormatException e) {
-            System.out.println("ID/Age must be numbers!");
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     private void addDoctor() {
         try {
-            System.out.print("Doctor ID: ");
-            int id = Integer.parseInt(scanner.nextLine().trim());
-            System.out.print("Name: ");
-            String name = scanner.nextLine().trim();
+            System.out.print("Enter ID: ");
+            int id = Integer.parseInt(scanner.nextLine());
+
+            System.out.print("Enter Name: ");
+            String name = scanner.nextLine();
+
             System.out.print("Specialization: ");
-            String specialization = scanner.nextLine().trim();
-            System.out.print("Experience years: ");
-            int experience = Integer.parseInt(scanner.nextLine().trim());
+            String spec = scanner.nextLine();
 
-            Doctor doctor = new Doctor(id, name, specialization, experience);
-            people.add(doctor);
-            System.out.println("Doctor added: " + name);
-        } catch (NumberFormatException e) {
-            System.out.println("ID/Experience must be numbers!");
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-    }
+            System.out.print("Experience: ");
+            int exp = Integer.parseInt(scanner.nextLine());
 
-    private void addAppointment() {
-        try {
-            System.out.print("Appointment ID: ");
-            int id = Integer.parseInt(scanner.nextLine().trim());
-            System.out.print("Date: ");
-            String date = scanner.nextLine().trim();
-            System.out.print("Time: ");
-            String time = scanner.nextLine().trim();
-            System.out.print("Status: ");
-            String status = scanner.nextLine().trim();
+            Doctor d = new Doctor(id, name, spec, exp);
+            doctorDAO.addDoctor(d);
 
-            Appointment appointment = new Appointment(id, date, time, status);
-            appointments.add(appointment);
-            System.out.println("Appointment added.");
-        } catch (NumberFormatException e) {
-            System.out.println("ID must be number!");
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    private void viewPatients() {
-        boolean hasPatients = false;
-        System.out.println("\n--- PATIENTS ---");
-        for (int i = 0; i < people.size(); i++) {
-            if (people.get(i) instanceof Patient) {
-                System.out.println((i + 1) + ". " + people.get(i));
-                hasPatients = true;
-            }
-        }
-        if (!hasPatients) {
-            System.out.println("No patients.");
+        } catch (Exception e) {
+            System.out.println("Invalid input!");
         }
     }
 
     private void viewDoctors() {
-        boolean hasDoctors = false;
-        System.out.println("\n--- DOCTORS ---");
-        for (int i = 0; i < people.size(); i++) {
-            if (people.get(i) instanceof Doctor) {
-                System.out.println((i + 1) + ". " + people.get(i));
-                hasDoctors = true;
-            }
-        }
-        if (!hasDoctors) {
-            System.out.println("No doctors.");
+        List<Doctor> doctors = doctorDAO.getAllDoctors();
+
+        System.out.println("\n--- LIST ---");
+        for (Doctor d : doctors) {
+            System.out.println(d);
         }
     }
 
-    private void viewAppointments() {
-        if (appointments.isEmpty()) {
-            System.out.println("No appointments.");
-            return;
-        }
-        System.out.println("\n--- APPOINTMENTS ---");
-        for (int i = 0; i < appointments.size(); i++) {
-            System.out.println((i + 1) + ". " + appointments.get(i));
-        }
+    private void updateDoctor() {
+        System.out.print("Enter ID to update: ");
+        int id = Integer.parseInt(scanner.nextLine());
+        System.out.print("New Specialization: ");
+        String spec = scanner.nextLine();
+
+        doctorDAO.updateSpecialization(id, spec);
     }
 
-    private void demonstratePolymorphism() {
-        System.out.println("\n--- POLYMORPHISM DEMO ---");
-        if (people.isEmpty()) {
-            System.out.println("Add people first!");
-            return;
+    private void deleteDoctor() {
+        System.out.print("Enter ID to delete: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        doctorDAO.deleteDoctor(id);
+    }
+
+    private void searchDoctor() {
+        System.out.print("Enter name to search: ");
+        String name = scanner.nextLine();
+
+        List<Doctor> results = doctorDAO.searchByName(name);
+
+        System.out.println("--- FOUND ---");
+        for (Doctor d : results) {
+            System.out.println(d);
         }
-        for (int i = 0; i < people.size(); i++) {
-            Person p = people.get(i);
-            System.out.print(p.getRole() + " (" + p.getName() + "): ");
-            p.performDuty();
-        }
+    }
+    private void searchByExperience() {
+        System.out.print("Enter minimum experience years: ");
+        int exp = Integer.parseInt(scanner.nextLine());
+        List<Doctor> result = doctorDAO.searchByExperience(exp);
     }
 }

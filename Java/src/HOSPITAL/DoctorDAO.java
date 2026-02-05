@@ -1,131 +1,108 @@
 package HOSPITAL;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-public class DoctorDAO {
-    // insert part
-    public void addDoctor(Doctor doc) {
-        String sql = "INSERT INTO doctors (id, name, specialization, experience) VALUES (?, ?, ?, ?)";
 
+public class DoctorDAO {
+
+    public void addDoctor(Doctor d) {
+        String sql = "INSERT INTO doctors (id, name, specialization, experience) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, doc.getId());
-            stmt.setString(2, doc.getName());
-            stmt.setString(3, doc.getSpecialization());
-            stmt.setInt(4, doc.getExperienceYears());
-
+            stmt.setInt(1, d.getId());
+            stmt.setString(2, d.getName());
+            stmt.setString(3, d.getSpecialization());
+            stmt.setInt(4, d.getExperienceYears());
             stmt.executeUpdate();
-            System.out.println("Doctor saved to database!");
-
-        } catch (SQLException e) {
-            System.out.println("Error adding: " + e.getMessage());
-        }
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    // select part
-    public List<Doctor> getAllDoctors() {
+    public List<Doctor> getAll() {
         List<Doctor> list = new ArrayList<>();
-        String sql = "SELECT * FROM doctors";
-
+        String sql = "SELECT * FROM doctors ORDER BY id";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) { // Получаем таблицу
-
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String spec = rs.getString("specialization");
-                int exp = rs.getInt("experience");
-
-                list.add(new Doctor(id, name, spec, exp));
+                list.add(new Doctor(rs.getInt("id"), rs.getString("name"),
+                        rs.getString("specialization"), rs.getInt("experience")));
             }
-        } catch (SQLException e) {
-            System.out.println("Error loading: " + e.getMessage());
-        }
+        } catch (SQLException e) { e.printStackTrace(); }
         return list;
     }
 
-//delete part
-    public void deleteDoctor(int id) {
-        String sql = "DELETE FROM doctors WHERE id = ?";
-
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-            System.out.println("Doctor deleted.");
-
-        } catch (SQLException e) {
-            System.out.println("Error deleting: " + e.getMessage());
-        }
-    }
-
-    // update part
-    public void updateSpecialization(int id, String newSpec) {
+    public void updateSpec(int id, String spec) {
         String sql = "UPDATE doctors SET specialization = ? WHERE id = ?";
-
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, newSpec);
+            stmt.setString(1, spec);
             stmt.setInt(2, id);
             stmt.executeUpdate();
-            System.out.println("Doctor updated.");
-
-        } catch (SQLException e) {
-            System.out.println("Error updating: " + e.getMessage());
-        }
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    // 5. search ilike
-    public List<Doctor> searchByExperience(int minYears) {
-        List<Doctor> list = new ArrayList<>();
-        String sql = "SELECT * FROM doctors WHERE experience >= ?"; // Поиск по числу
-
+    public void updateExp(int id, int exp) {
+        String sql = "UPDATE doctors SET experience = ? WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, exp);
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) { e.printStackTrace(); }
+    }
 
-            stmt.setInt(1, minYears);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                list.add(new Doctor(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("specialization"),
-                        rs.getInt("experience")
-                ));
-            }
-        } catch (SQLException e) {
-            System.out.println("Search error: " + e.getMessage());
-        }
-        return list;
+    public void delete(int id) {
+        String sql = "DELETE FROM doctors WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
     public List<Doctor> searchByName(String name) {
         List<Doctor> list = new ArrayList<>();
-        // ILIKE = поиск без учета регистра (John = john)
         String sql = "SELECT * FROM doctors WHERE name ILIKE ?";
-
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, "%" + name + "%"); // % означает "любые символы"
+            stmt.setString(1, "%" + name + "%");
             ResultSet rs = stmt.executeQuery();
-
             while (rs.next()) {
-                list.add(new Doctor(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("specialization"),
-                        rs.getInt("experience")
-                ));
+                list.add(new Doctor(rs.getInt("id"), rs.getString("name"),
+                        rs.getString("specialization"), rs.getInt("experience")));
             }
-        } catch (SQLException e) {
-            System.out.println("Search error: " + e.getMessage());
-        }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return list;
+    }
+
+    public List<Doctor> searchBySpec(String spec) {
+        List<Doctor> list = new ArrayList<>();
+        String sql = "SELECT * FROM doctors WHERE specialization ILIKE ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, spec);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                list.add(new Doctor(rs.getInt("id"), rs.getString("name"),
+                        rs.getString("specialization"), rs.getInt("experience")));
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return list;
+    }
+
+    public List<Doctor> searchMinExp(int min) {
+        List<Doctor> list = new ArrayList<>();
+        String sql = "SELECT * FROM doctors WHERE experience >= ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, min);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                list.add(new Doctor(rs.getInt("id"), rs.getString("name"),
+                        rs.getString("specialization"), rs.getInt("experience")));
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
         return list;
     }
 }

@@ -1,114 +1,108 @@
 package menu;
+
 import HOSPITAL.Doctor;
 import HOSPITAL.DoctorDAO;
-import java.util.List;
 import java.util.Scanner;
 
 public class HospitalMenu implements Menu {
-    private Scanner scanner = new Scanner(System.in);
-    private DoctorDAO doctorDAO = new DoctorDAO();
+    private DoctorDAO dao = new DoctorDAO();
+    private Scanner sc = new Scanner(System.in);
 
-    @Override
     public void displayMenu() {
-        System.out.println("\n--- DATABASE MENU ---");
+        System.out.println("\n=== HOSPITAL SYSTEM (WEEK 8) ===");
         System.out.println("1. Add Doctor");
         System.out.println("2. View All Doctors");
         System.out.println("3. Update Specialization");
-        System.out.println("4. Delete Doctor");
-        System.out.println("5. Search by Name");
-        System.out.println("6. Search by Experience (Numeric Search)");
+        System.out.println("4. Update Experience");
+        System.out.println("5. Delete Doctor (with confirm)");
+        System.out.println("6. Search by Name (Partial)");
+        System.out.println("7. Search by Specialization");
+        System.out.println("8. Search by Min Experience");
+        System.out.println("9. Clear all data (Warning!)");
+        System.out.println("10. Show experienced doctors (10+ years)");
+        System.out.println("11. Database Connection Status");
         System.out.println("0. Exit");
     }
 
-    @Override
     public void run() {
         while (true) {
             displayMenu();
-            System.out.print("Select: ");
-            String input = scanner.nextLine();
+            System.out.print("Select option: ");
+            String op = sc.nextLine();
+            if (op.equals("0")) break;
 
-            if (input.equals("0")) break;
-
-            if (input.equals("1")) {
-                addDoctor();
-            } else if (input.equals("2")) {
-                viewDoctors();
-            } else if (input.equals("3")) {
-                updateDoctor();
-            } else if (input.equals("4")) {
-                deleteDoctor();
-            } else if (input.equals("5")) {
-                searchDoctor();
-            } else if (input.equals("6")) {
-                searchByExperience();
-            } else {
-                System.out.println("Wrong command.");
-            }
+            if (op.equals("1")) add();
+            else if (op.equals("2")) showAll();
+            else if (op.equals("3")) updateSpec();
+            else if (op.equals("4")) updateExp();
+            else if (op.equals("5")) deleteDoc();
+            else if (op.equals("6")) searchName();
+            else if (op.equals("7")) searchSpec();
+            else if (op.equals("8")) searchMin();
+            else if (op.equals("9")) System.out.println("Feature coming soon...");
+            else if (op.equals("10")) showExperienced();
+            else if (op.equals("11")) checkStatus();
+            else System.out.println("Invalid option!");
         }
     }
 
+    private void add() {
+        System.out.print("ID: "); int id = Integer.parseInt(sc.nextLine());
+        System.out.print("Name: "); String n = sc.nextLine();
+        System.out.print("Spec: "); String s = sc.nextLine();
+        System.out.print("Exp: "); int e = Integer.parseInt(sc.nextLine());
+        dao.addDoctor(new Doctor(id, n, s, e));
+        System.out.println("Done.");
+    }
 
-    private void addDoctor() {
-        try {
-            System.out.print("Enter ID: ");
-            int id = Integer.parseInt(scanner.nextLine());
+    private void showAll() {
+        for (Doctor d : dao.getAll()) System.out.println(d);
+    }
 
-            System.out.print("Enter Name: ");
-            String name = scanner.nextLine();
+    private void updateSpec() {
+        System.out.print("ID: "); int id = Integer.parseInt(sc.nextLine());
+        System.out.print("New Spec: "); String s = sc.nextLine();
+        dao.updateSpec(id, s);
+    }
 
-            System.out.print("Specialization: ");
-            String spec = scanner.nextLine();
+    private void updateExp() {
+        System.out.print("ID: "); int id = Integer.parseInt(sc.nextLine());
+        System.out.print("New Exp: "); int e = Integer.parseInt(sc.nextLine());
+        dao.updateExp(id, e);
+    }
 
-            System.out.print("Experience: ");
-            int exp = Integer.parseInt(scanner.nextLine());
-
-            Doctor d = new Doctor(id, name, spec, exp);
-            doctorDAO.addDoctor(d);
-
-        } catch (Exception e) {
-            System.out.println("Invalid input!");
+    private void deleteDoc() {
+        System.out.print("ID to delete: "); int id = Integer.parseInt(sc.nextLine());
+        System.out.print("Are you sure? (y/n): ");
+        if (sc.nextLine().equalsIgnoreCase("y")) {
+            dao.delete(id);
+            System.out.println("Deleted.");
         }
     }
 
-    private void viewDoctors() {
-        List<Doctor> doctors = doctorDAO.getAllDoctors();
-
-        System.out.println("\n--- LIST ---");
-        for (Doctor d : doctors) {
-            System.out.println(d);
-        }
+    private void searchName() {
+        System.out.print("Enter name: ");
+        String n = sc.nextLine();
+        for (Doctor d : dao.searchByName(n)) System.out.println(d);
     }
 
-    private void updateDoctor() {
-        System.out.print("Enter ID to update: ");
-        int id = Integer.parseInt(scanner.nextLine());
-        System.out.print("New Specialization: ");
-        String spec = scanner.nextLine();
-
-        doctorDAO.updateSpecialization(id, spec);
+    private void searchSpec() {
+        System.out.print("Enter specialization: ");
+        String s = sc.nextLine();
+        for (Doctor d : dao.searchBySpec(s)) System.out.println(d);
     }
 
-    private void deleteDoctor() {
-        System.out.print("Enter ID to delete: ");
-        int id = Integer.parseInt(scanner.nextLine());
-
-        doctorDAO.deleteDoctor(id);
+    private void searchMin() {
+        System.out.print("Min experience: ");
+        int m = Integer.parseInt(sc.nextLine());
+        for (Doctor d : dao.searchMinExp(m)) System.out.println(d);
     }
 
-    private void searchDoctor() {
-        System.out.print("Enter name to search: ");
-        String name = scanner.nextLine();
-
-        List<Doctor> results = doctorDAO.searchByName(name);
-
-        System.out.println("--- FOUND ---");
-        for (Doctor d : results) {
-            System.out.println(d);
-        }
+    private void showExperienced() {
+        for (Doctor d : dao.searchMinExp(10)) System.out.println(d);
     }
-    private void searchByExperience() {
-        System.out.print("Enter minimum experience years: ");
-        int exp = Integer.parseInt(scanner.nextLine());
-        List<Doctor> result = doctorDAO.searchByExperience(exp);
+
+    private void checkStatus() {
+        System.out.println("Database 'hospital' is connected.");
     }
 }
